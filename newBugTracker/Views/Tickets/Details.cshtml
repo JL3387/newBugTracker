@@ -1,0 +1,398 @@
+﻿@model newBugTracker.Models.Ticket
+@using newBugTracker.Helpers
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="panel panel-color panel-inverse">
+            <div class="panel-heading text-center">
+                <h2 class="panel-title">Ticket Titled:</h2>
+                <h3 class="panel-title">@Model.Title</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <div class="col-md-6">
+                        <h4>
+                            <dt>
+                                @Html.DisplayName("Attached to Project")
+                            </dt>
+
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.Project.Name)</small>
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Description")
+                            </dt>
+
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.Description)</small>
+                            </dd>
+
+                        </h4>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h4>
+                            <dt>
+                                @Html.DisplayName("Created By")
+                            </dt>
+
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.OwnerUser.FullName)</small>
+                            </dd>
+                            <dt>
+                                @Html.DisplayName("Assigned To")
+                            </dt>
+
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.AssignedToUser.FullName)</small>
+                            </dd>
+                            <dt>
+                                @Html.DisplayName("Priority")
+                            </dt>
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.TicketPriority.Name)</small>
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Status")
+                            </dt>
+
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.TicketStatus.Name)</small>
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Ticket Type")
+                            </dt>
+
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.TicketType.Name)</small>
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Created")
+                            </dt>
+
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.Created)</small>
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Updated")
+                            </dt>
+
+                            <dd>
+                                <small>@Html.DisplayFor(model => model.Updated)</small>
+                            </dd>
+                        </h4>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+@*<div>
+    <h3>Ticket: @Model.Title</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <div class="col-md-6">
+            <h4>
+                <dt>
+                    @Html.DisplayName("Title")
+                </dt>
+
+                <dd>
+                    <small>@Html.DisplayFor(model => model.Title)</small>
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Description")
+                </dt>
+
+                <dd>
+                    <small>@Html.DisplayFor(model => model.Description)</small>
+                </dd>
+                <dt>
+                    @Html.DisplayName("Created By")
+                </dt>
+
+                <dd>
+                    <small>@Html.DisplayFor(model => model.OwnerUser.FullName)</small>
+                </dd>
+                <dt>
+                    @Html.DisplayName("Assigned To")
+                </dt>
+
+                <dd>
+                    <small>@Html.DisplayFor(model => model.AssignedToUser.FullName)</small>
+                </dd>
+            </h4>
+        </div>
+
+        <div class="col-md-6">
+            <h4>
+                <dt>
+                    @Html.DisplayName("Ticket Priority")
+                </dt>
+                <dd>
+                    <small>@Html.DisplayFor(model => model.TicketPriority.Name)</small>
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Ticket Status")
+                </dt>
+
+                <dd>
+                    <small>@Html.DisplayFor(model => model.TicketStatus.Name)</small>
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Ticket Type")
+                </dt>
+
+                <dd>
+                    <small>@Html.DisplayFor(model => model.TicketType.Name)</small>
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Created")
+                </dt>
+
+                <dd>
+                    <small>@Html.DisplayFor(model => model.Created)</small>
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Updated")
+                </dt>
+
+                <dd>
+                    <small>@Html.DisplayFor(model => model.Updated)</small>
+                </dd>
+            </h4>
+        </div>
+    </dl>
+</div>*@
+<p>
+    <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" class="btn btn-inverse btn-xs m-b-5" />
+
+    @if ((User.IsInRole("Admin")) ||
+(User.IsInRole("ProjectManager") && Model.Project.Users.Any(u => u.Id == (User.Identity.GetUserId())) ||
+(User.IsInRole("Developer") && Model.AssignedToUserId == (User.Identity.GetUserId())) ||
+(User.IsInRole("Submitter") && Model.OwnerUserId == (User.Identity.GetUserId()))))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })
+    }
+    @if (User.IsInRole("Admin") || (User.IsInRole("ProjectManager") && Model.Project.Users.Any(u => u.Id == (User.Identity.GetUserId()))))
+    {
+        @Html.ActionLink("Assign Ticket", "AssignTicket", new { id = Model.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })
+    }
+</p>
+
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active">
+                <a href="#comments" data-toggle="tab" aria-expanded="false">
+                    <span class="visible-xs"><i class="fa fa-home"></i></span>
+                    <span class="hidden-xs">Comments</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="#attachments" data-toggle="tab" aria-expanded="false">
+                    <span class="visible-xs"><i class="fa fa-user"></i></span>
+                    <span class="hidden-xs">Attachments</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="#history" data-toggle="tab" aria-expanded="true">
+                    <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
+                    <span class="hidden-xs">History</span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="comments">
+
+                @if (AuthorizationHelper.Authorization(Model.OwnerUserId, Model.AssignedToUserId, Model.ProjectId))
+                {
+                    using (Html.BeginForm("Create", "TicketComments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("TicketId", Model.Id)
+                        <div class="row">
+                            <div class="form-group col-md-11">
+                                <textarea name="Comment" class="form-control" rows="5" placeholder="Add Comment.."></textarea>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="form-group col-md-4">
+                                <button type="submit" class="btn btn-inverse m-b-5">Add Comment</button>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                    }
+                }
+                <div class="wraper container-fluid row">
+                    <div class="page-title">
+                        <h3 class="title">Comment</h3>
+                    </div>
+                    <div class="col-sm-12">
+                        <ul class="timeline m-b-30">
+                            @{ var counter = 0;}
+                            @foreach (var comment in Model.TicketComments)
+                            {
+                                if (counter % 2 == 0)
+                                {
+                                    <li>
+                                        <div class="timeline-badge">
+                                            <i class="fa fa-check"></i>
+                                        </div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <p>
+                                                    <small class="text-muted"><i class="fa fa-time"></i>By @comment.User.FullName Posted on @comment.Created</small>
+                                                </p>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>@comment.Comment</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="timeline-inverted">
+                                        <div class="timeline-badge">
+                                            <i class="fa fa-check"></i>
+                                        </div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <p>
+                                                    <small class="text-muted"><i class="fa fa-time"></i>By @comment.User.FullName Posted on @comment.Created</small>
+                                                </p>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>@comment.Comment</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+
+                                counter++;
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="attachments">
+                @if (AuthorizationHelper.Authorization(Model.OwnerUserId, Model.AssignedToUserId, Model.ProjectId))
+                {
+                    using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "Multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("TicketId", Model.Id)
+
+                        <div class="form-group col-md-11">
+                            <textarea name="Description" id="attachmentDescription" class="form-control" rows="5" placeholder="Descritption"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <input type="file" class="form-control" name="file" id="fileUpload" />
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-inverse m-b-5">Add Attachment</button>
+                            </div>
+                        </div>
+
+                    }
+                }
+                <div class="wraper container-fluid row">
+                    <div class="page-title">
+                        <h3 class="title">Attachments</h3>
+                    </div>
+                    <div class="col-sm-12">
+                        <ul class="timeline m-b-30">
+                            @{var aCounter = 0;}
+                            @foreach (var attachment in Model.TicketAttachments)
+                            {
+                                if (aCounter % 2 == 0)
+                                {
+                                    <li>
+                                        <div class="timeline-badge warning">
+                                            <i class="fa fa-image"></i>
+                                        </div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <p>
+                                                    <small class="text-muted"><i class="fa fa-time"></i>By @attachment.User.FullName Posted on @attachment.Created</small>
+                                                </p>
+                                                <p>@attachment.Description</p>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="m-t-20">
+                                                    <a href="@attachment.FileUrl">
+                                                        <img alt="" src="@attachment.FileUrl" style="max-width: 150px;">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="timeline-inverted">
+                                        <div class="timeline-badge warning">
+                                            <i class="fa fa-image"></i>
+                                        </div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <p>
+                                                    <small class="text-muted"><i class="fa fa-time"></i>By @attachment.User.FullName Posted on @attachment.Created</small>
+                                                </p>
+                                                <p>@attachment.Description</p>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="m-t-20">
+                                                    <a href="@attachment.FileUrl">
+                                                        <img alt="" src="@attachment.FileUrl" style="max-width: 150px;">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                aCounter++;
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="history">
+                @foreach (var history in Model.TicketHistories.OrderByDescending(c => c.Changed))
+                {
+                    <div class="container">
+                        <h5>Changed By @history.User.FullName on @history.Changed</h5>
+                        <p>@history.Property was changed from @history.OldValue  to @history.NewValue</p>
+                    </div>
+                    <hr>
+                }
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-lg-3"></div>
+</div>
+

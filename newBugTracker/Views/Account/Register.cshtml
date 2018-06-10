@@ -1,0 +1,87 @@
+﻿@model newBugTracker.Models.RegisterViewModel
+
+@{
+    Layout = null;
+}
+
+<title>BugTracker</title>
+
+<!-- Bootstrap core CSS -->
+<link href="~/CSS/bootstrap.min.css" rel="stylesheet">
+<link href="~/CSS/bootstrap-reset.css" rel="stylesheet">
+
+<!--Animation css-->
+<link href="~/CSS/animate.css" rel="stylesheet">
+
+<!--Icon-fonts css-->
+<link href="~/Assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href="~/Assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
+<link href="~/Assets/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" />
+
+<link href="~/Assets/sweet-alert/sweet-alert.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="~/CSS/style.css" rel="stylesheet">
+<link href="~/CSS/helper.css" rel="stylesheet">
+
+<div class="wrapper-page">
+    <div class="panel panel-color panel-inverse">
+        <div class="panel-heading" style="text-align: center;">
+            <a href="@Url.Action("Landing", "Home")"><img src="~/Img/BugTracker_Logo_White.png" style="height:125px;" /></a>
+        </div>
+
+        <div class="panel-body">
+            @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal m-t-10 p-20 p-b-0" }))
+            {
+                @Html.AntiForgeryToken()
+                <h5>Register</h5>
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" placeholder="Email" name="Email">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" placeholder="First Name" name="FirstName">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" placeholder="Last Name" name="LastName">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="password" placeholder="Password" name="Password">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="password" placeholder="Confirm Password" name="ConfirmPassword">
+                    </div>
+                </div>
+
+
+                <p>
+                    @Html.ActionLink("Login With a Existing Account", "Login")
+                </p>
+                <div class="form-group text-right">
+                    <div class="col-xs-12">
+                        <button class="btn btn-inverse w-md" type="submit">Log In</button>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="~/JS/jquery.js"></script>
+<script src="~/JS/bootstrap.min.js"></script>
+<script src="~/JS/pace.min.js"></script>
+<script src="~/JS/wow.min.js"></script>
+<script src="~/JS/jquery.nicescroll.js" type="text/javascript"></script>
+
+<script src="~/Assets/sweet-alert/sweet-alert.min.js"></script>
+<script src="~/Assets/sweet-alert/sweet-alert.init.js"></script>

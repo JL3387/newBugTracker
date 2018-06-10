@@ -1,0 +1,99 @@
+﻿@model newBugTracker.Models.DashboardVM
+
+@{
+    ViewBag.Title = "AdminDashboard";
+}
+
+<h3 class="text-center">Admin Dashboard</h3>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="panel panel-default text-center">
+            <div class="panel-body p-0">
+                <div class="Velonic-carousel">
+                    <div id="Notifications" class="owl-carousel">
+                        @foreach (var item in Model.Notifications)
+                        {
+                            <div class="item">
+                                <h4>Most Recent Notifications</h4>
+                                <p class="small">@item.Created</p>
+                                <p class="m-t-30"><em>@Html.Raw(item.Message)</em></p>
+                                @Html.ActionLink("All Notifications", "Index", "TicketNotifications", null, new { @class = "btn btn-inverse btn-xs m-b-5" })
+                            </div><!-- /.item -->
+                        }
+                    </div><!-- /#tiles-slide-1 -->
+                </div><!-- /.panel-body -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>  <!-- End row -->
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Recent Tickets</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Created</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.AllTickets)
+                                {
+                                    <tr>
+                                        <td>@item.Title</td>
+                                        <td>@item.Created</td>
+                                        <td>@Html.ActionLink("Details", "Details", "Tickets", new { id = item.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Recent Projects</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Projects</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var proj in Model.Projects)
+                                {
+                                    <tr>
+                                        <td>@proj.Name</td>
+                                        <td>@Html.ActionLink("Details", "Details", "Projects", new { id = proj.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

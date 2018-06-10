@@ -1,0 +1,178 @@
+﻿@model newBugTracker.Models.Project
+
+<div class="col-md-12">
+    <div class="panel panel-color panel-inverse">
+        <div class="panel-heading">
+            <h3 class="panel-title">@Model.Name</h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <p>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })
+                    }
+                </p>
+            </div>
+
+            <div class="container-fluid half-padding">
+                <div class="row">
+                    <div class="template template__table_data col-md-5">
+
+                        <div class="col-md-12">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Users on @Model.Name</h3>
+                                    <h5>Project Manager: @Model.PMName</h5>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>@Html.DisplayName("Name")</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Users)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.FullName</td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1"></div>
+                    @if (User.IsInRole("Submitter"))
+                    {
+                        <div class="container-fluid half-padding">
+                            <div class="template template__table_sortable col-md-5">
+                                <div>
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Create Ticket</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="scrollable scrollbar-macosx">
+                                                <div class="col-md-12">
+                                                    @using (Html.BeginForm("Create", "Tickets", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="ProjectId" value="@Model.Id" />
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <input type="text" name="Title" class="form-control" placeholder="Title">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="panel-body" style="padding: 0px;" name="Descritpion">
+                                                                    <textarea name="Description" class="summernote" placeholder="Ticket Description"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button type="submit" class="btn btn-inverse btn-xs m-b-5">Submit Ticket</button>
+                                                            </div>
+                                                        </div>
+                                                        @*</div>*@
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+                @*<div class="container-fluid half-padding">*@
+                <div class="row">
+                    <div class="template template__table_data col-md-9">
+                        <div class="col-md-12">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Tickets Attached to @Model.Name</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable " cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>@Html.DisplayName("Title")</th>
+                                                <th>@Html.DisplayName("Description")</th>
+                                                <th>@Html.DisplayName("Ticket Priority")</th>
+                                                <th>@Html.DisplayName("Assigned To User")</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Tickets.OrderByDescending(t => t.Created))
+                                            {
+                                                <tr>
+                                                    <td>@item.Title</td>
+                                                    <td>@item.Description</td>
+                                                    <td>
+                                                        @if (item.TicketPriorityId == 1)
+                                                        {
+                                                            <span class="label label-warning">
+                                                                @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                                            </span>
+                                                        }
+                                                        @if (item.TicketPriorityId == 2)
+                                                        {
+                                                            <span class="label label-success">
+                                                                @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                                            </span>
+                                                        }
+                                                        @if (item.TicketPriorityId == 3)
+                                                        {
+                                                            <span class="label label-primary">
+                                                                @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                                            </span>
+                                                        }
+                                                        @if (item.TicketPriorityId == 4)
+                                                        {
+                                                            <span class="label label-danger">
+                                                                @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                                            </span>
+                                                        }
+                                                    </td>
+                                                    @if (item.AssignedToUser == null)
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@item.AssignedToUser.FullName</td>
+                                                    }
+
+                                                    <td>
+                                                        @Html.ActionLink("Details", "Details", "Tickets", new { id = item.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<p>
+    <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" class="btn btn-inverse btn-xs m-b-5" />
+</p>

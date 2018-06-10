@@ -1,0 +1,49 @@
+﻿@model newBugTracker.Models.Project
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="col-md-12">
+    <div class="panel panel-color panel-inverse">
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit Project: @Model.Name</h3>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Created)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProjectManager, "Assign Project Manager", new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("ProjectManager", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-inverse m-b-5" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" class="btn btn-inverse btn-xs m-b-5" />
+</div>
+

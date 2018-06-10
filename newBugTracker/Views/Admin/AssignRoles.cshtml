@@ -1,0 +1,64 @@
+﻿@model IEnumerable<newBugTracker.Models.UserRolesViewModel>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Users</h3>
+            </div>
+            <div class="panel-body">
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable " cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayName("User")</th>
+                            <th>@Html.DisplayName("Roles")</th>
+                            <th>@Html.DisplayName("Projects")</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mod in Model)
+                        {
+                            <tr>
+                                <td>@mod.User.LastName, @mod.User.FirstName</td>
+                                <td>
+                                    @foreach (var role in mod.Roles)
+                                    {
+                                        <span>@role @(role != mod.Roles.Last() ? " " : "")</span>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var proj in mod.User.Projects)
+                                    {
+                                        <span>@proj.Name @(proj != mod.User.Projects.Last() ? ", " : "")</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <div style="padding-right: 10px; display: inline-block">
+                                            @Html.ActionLink("Edit Roles", "EditUser", new { id = mod.User.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })
+                                        </div>
+
+                                        <div style="padding-right: 10px; display: inline-block">
+                                            @Html.ActionLink("Assign Project", "AssignProjects", "Admin", new { id = mod.User.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })
+                                        </div>
+                                    }
+                                    @if (User.IsInRole("ProjectManager"))
+                                    {
+                                        @Html.ActionLink("Assign Project", "AssignProjects", "Admin", new { id = mod.User.Id }, new { @class = "btn btn-inverse btn-xs m-b-5" })
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- End Row -->
+<p>
+    <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" class="btn btn-inverse btn-sm m-b-5" />
+</p>

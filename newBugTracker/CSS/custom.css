@@ -1,0 +1,15 @@
+﻿.collapsedPic{
+    max-height:50px;
+    margin: 6px 0;
+}
+.uncollapsedPic{
+    max-height: 62px;
+}
+
+.padding10 {
+    padding-right: 10px;
+}
+
+label-custom {
+    background-color: darkgrey;
+}

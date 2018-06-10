@@ -1,0 +1,32 @@
+﻿@model newBugTracker.Models.Ticket
+
+@using (Html.BeginForm("AssignTicket", "Tickets", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Assign: @Model.Title</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssignedToUserId, "Assign Developer", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownList("AssignedToUserId", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-inverse btn-sm m-b-5" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" class="btn btn-inverse btn-xs m-b-5" />
+</div>
+
+

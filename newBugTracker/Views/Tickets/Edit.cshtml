@@ -1,0 +1,97 @@
+﻿@model newBugTracker.Models.Ticket
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="col-md-12">
+    <div class="panel panel-color panel-inverse">
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit Ticket Titled: @Model.Title</h3>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.OwnerUserId)
+                    @Html.HiddenFor(model => model.Created)
+                    @Html.HiddenFor(model => model.ProjectId)
+                    @Html.HiddenFor(model => model.AssignedToUserId)
+
+                    @if (User.IsInRole("Developer"))
+                    {
+                        @Html.HiddenFor(model => model.Title)
+                        @Html.HiddenFor(model => model.Description)
+                        @Html.HiddenFor(model => model.TicketTypeId)
+                        @Html.HiddenFor(model => model.TicketPriorityId)
+                    }
+
+                    @if (User.IsInRole("Submitter"))
+                    {
+                        @Html.HiddenFor(model => model.TicketStatusId)
+                    }
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager") || User.IsInRole("Submitter"))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Title, "Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                <div class="panel-body" style="padding: 0px;" name="Descritpion">
+                                    <textarea name="Description" class="summernote">@Model.Description</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TicketTypeId, "Ticket Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownList("TicketTypeId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TicketTypeId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TicketPriorityId, "Ticket Priority", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownList("TicketPriorityId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TicketPriorityId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                    @if (!User.IsInRole("Submitter"))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TicketStatusId, "Ticket Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownList("TicketStatusId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TicketStatusId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-inverse btn-sm m-b-5" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div>
+    <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" class="btn btn-inverse btn-xs m-b-5" />
+</div>
+

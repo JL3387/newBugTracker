@@ -1,0 +1,33 @@
+﻿@model newBugTracker.Models.Ticket
+
+<div class="col-md-4"></div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-color panel-danger">
+            <div class="panel-heading" style="text-align: center;">
+                <h3 class="panel-title">Are you sure you want to delete?</h3>
+            </div>
+            <div class="panel-body" style="text-align: center;">
+                <h4>This will delete ticket titled:</h4>
+                <h4>@Model.Title</h4>
+                <h4>That is attached to project:</h4>
+                <h4>@Model.Project.Name</h4>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete it" class="btn btn-inverse btn-sm m-b-5" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4"></div>
+<div class="row">
+    <p>
+        <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" class="btn btn-inverse btn-xs m-b-5" />
+    </p>
+</div>
+

@@ -1,0 +1,110 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>BugTracker</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrapLanding/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom fonts for this template -->
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/simple-line-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <!-- Plugin CSS -->
+    <link href="~/Content/device-mockups.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/Content/new-age.min.css" rel="stylesheet" />
+</head>
+<body id="page-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="http://johns-portfolio.azurewebsites.net/">
+                            <img src="~/icons/portfolio.png" alt="Portfolio Site" style="max-width:30px;" />
+                        </a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 10px;">
+                        <a href="https://github.com/JL3387"><img src="~/icons/GitHub-Mark-64px.png" style="max-width: 30px; " /></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.linkedin.com/in/john-mathis-b6134b160/"><img src="~/icons/In-Black-66px-R.png" style="max-width: 30px;" /></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="@Url.Action("Register", "Account")">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="@Url.Action("Login", "Account")">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Login As Guest Admin", "GuestLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl, type = "Admin" }, new { @class = "btn btn-default" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Login As Guest Project Manager", "GuestLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl, type = "ProjectManager" }, new { @class = "btn btn-default" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Login As Guest Developer", "GuestLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl, type = "Developer" }, new { @class = "btn btn-default" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Login As Guest Submitter", "GuestLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl, type = "Submitter" }, new { @class = "btn btn-default" })
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="masthead">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-6 my-auto">
+                    <div class="header-content mx-auto">
+                        <h2 class="mb-5">Welcome to my BugTracker it's a web based bug tracking software that allows you to easily track software development on a per-project basis. To test it out simply register a account or try one of the demo logins. </h2>
+                    </div>
+                </div>
+                <div class="col-lg-6 my-auto">
+                    <div class="device-container">
+                        <div class="">
+                            <div class="device">
+                                <div class="screen">
+                                    <img src="~/img/bugtracker_logo.png" style="width:475px; margin-bottom: 150px;" />
+                                </div>
+                                <div class="button">
+                                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul style="position: absolute; bottom: 0;">
+                    <li style="display: inline-block;"><img style="max-height:50px;" src="~/icons/html.png" /></li>
+                    <li style="display: inline-block;"><img style="max-height:50px;" src="~/icons/css.png" /></li>
+                    <li style="display: inline-block;"><img style="max-height:50px;" src="~/icons/jquery.png" /></li>
+                    <li style="display: inline-block;"><img style="max-height:50px;" src="~/icons/csharp.png" /></li>
+                    <li style="display: inline-block;"><img style="max-height:50px;" src="~/icons/net.png" /></li>
+                    <li style="display: inline-block;"><img style="max-height:50px;" src="~/icons/sql.png" /></li>
+                </ul>
+            </div>
+        </div>
+
+    </header>
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="~/Scripts/jquery.easing.min.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="~/Scripts/new-age.min.js"></script>
+</body>
+</html>

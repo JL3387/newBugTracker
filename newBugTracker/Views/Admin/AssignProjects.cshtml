@@ -1,0 +1,16 @@
+﻿<h3>Assign Projects</h3>
+
+@using (Html.BeginForm("AssignProjects", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("UserId", (string)ViewBag.UserId)
+
+    <div class="form-group">
+        <div class="col-md-6">
+            @Html.ListBox("AllProjects", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <button class="btn btn-inverse m-b-5" type="submit">Assign</button>
+}
